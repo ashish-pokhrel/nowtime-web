@@ -12,7 +12,10 @@ export default function PostCard({ post }: { post: PostDto }) {
   const profileSrc = post.profileImage ? toAssetUrl(post.profileImage) : null;
 
   const imageUrls =
-    post.images?.map((x) => x.imageUrl).filter(Boolean).map(toAssetUrl) ?? [];
+    post.images
+      ?.map((x) => x.imageUrl)
+      .filter(Boolean)
+      .map(toAssetUrl) ?? [];
 
   const text = post.description?.trim() ?? "";
   const shouldShowToggle = text.length > 180; // simple threshold
@@ -21,14 +24,25 @@ export default function PostCard({ post }: { post: PostDto }) {
     <Card className={styles.card}>
       <CardContent className={styles.content}>
         <div className={styles.metaRow}>
-          {profileSrc ? (
-            <img className={styles.avatarImg} src={profileSrc} alt={post.userFullName} />
-          ) : (
-            <div className={styles.avatar}>{avatarLetter}</div>
-          )}
+          <div className={styles.avatarWrap}>
+            {profileSrc ? (
+              <img
+                className={styles.avatarImg}
+                src={profileSrc}
+                alt={post.userFullName}
+              />
+            ) : (
+              <span className={styles.avatarFallback}>{avatarLetter}</span>
+            )}
+          </div>
 
           <div className={styles.metaText}>
-            <Typography className={styles.author}>{post.userFullName}</Typography>
+            <div className={styles.nameRow}>
+              <Typography className={styles.author}>
+                {post.userFullName}
+              </Typography>
+            </div>
+
             <Typography className={styles.meta}>
               {post.timeElapsed}
               {post.postLocation ? ` • ${post.postLocation}` : ""}
@@ -39,7 +53,9 @@ export default function PostCard({ post }: { post: PostDto }) {
         {text && (
           <>
             <Typography
-              className={`${styles.postText} ${expanded ? styles.postTextExpanded : ""}`}
+              className={`${styles.postText} ${
+                expanded ? styles.postTextExpanded : ""
+              }`}
             >
               {text}
             </Typography>

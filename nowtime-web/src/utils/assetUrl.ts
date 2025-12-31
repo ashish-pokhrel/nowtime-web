@@ -1,6 +1,8 @@
 export function toAssetUrl(path: string) {
   if (!path) return path;
-
+  if (path.includes("/profile.jpeg") || path.startsWith("/assets/")) {
+    return `${import.meta.env.BASE_URL}${path.replace(/^\//, "")}`;
+  }
   // already absolute
   if (path.startsWith("http://") || path.startsWith("https://")) return path;
 

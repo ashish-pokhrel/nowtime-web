@@ -1,3 +1,69 @@
+.metaRow {
+  display: flex;
+  align-items: center;      /* ✅ keeps name aligned with avatar */
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.metaText {
+  min-width: 0;             /* ✅ prevents wrapping weirdness */
+  flex: 1;
+}
+
+.nameRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.author {
+  font-weight: 900 !important;
+  line-height: 1.15 !important;
+  font-size: 16px !important;
+  margin: 0;
+  white-space: nowrap;      /* ✅ prevent name breaking lines */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-size: 12.5px !important; /* ✅ smaller date/location */
+  opacity: 0.68;
+  margin-top: 3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Your fixed avatar wrapper (same for img + fallback) */
+.avatarWrap {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.12);
+  overflow: hidden;
+}
+
+.avatarImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.avatarFallback {
+  font-weight: 900;
+  font-size: 16px;
+  line-height: 1;
+  user-select: none;
+}
+
 .postText {
   margin-top: 8px;
   line-height: 1.55;
@@ -5,24 +71,33 @@
   white-space: pre-wrap;
   word-break: break-word;
 
-  /* ✅ collapsed by default */
+  /* Desktop clamp */
   display: -webkit-box;
-  -webkit-line-clamp: 4; /* show 4 lines */
+  -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
+/* Expanded state */
 .postTextExpanded {
-  /* ✅ remove clamp when expanded */
   display: block;
   -webkit-line-clamp: unset;
+  max-height: none;
   overflow: visible;
 }
 
-.showMoreBtn {
-  padding: 4px 6px !important;
-  min-width: auto !important;
-  text-transform: none !important;
-  font-weight: 800 !important;
-  opacity: 0.9;
+/* =========================
+   ✅ MOBILE FIX
+   ========================= */
+@media (max-width: 600px) {
+  .postText {
+    /* Mobile browsers are flaky with line-clamp */
+    display: block;
+    max-height: 6.2em; /* ~4 lines × line-height */
+    overflow: hidden;
+  }
+
+  .postTextExpanded {
+    max-height: none;
+  }
 }

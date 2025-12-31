@@ -1,3 +1,4 @@
+/* Page wrapper */
 .page {
   min-height: 100vh;
 }
@@ -7,13 +8,16 @@
   padding: 20px 16px 48px;
 }
 
-/* Header row (title + badge) */
+/* ===============================
+   Header (title + badge)
+   =============================== */
+
 .headRow {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 14px;
+  margin-bottom: 20px; /* ✅ more breathing room */
 }
 
 .title {
@@ -21,12 +25,14 @@
   font-weight: 900;
   letter-spacing: -0.4px;
   margin: 0;
+  line-height: 1.2;
 }
 
 .subtitle {
   opacity: 0.72;
   margin-top: 6px;
   line-height: 1.45;
+  font-size: 14.5px;
 }
 
 .badge {
@@ -34,9 +40,38 @@
   opacity: 0.9;
 }
 
-/* AddPost + Filters spacing */
+/* Back link (Feed page only) */
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-weight: 700;
+  font-size: 13px;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0.7;
+  margin-bottom: 6px;
+}
+
+.backLink:hover {
+  opacity: 1;
+}
+
+/* ===============================
+   Sections (AddPost, Filters)
+   =============================== */
+
 .section {
-  margin-top: 14px;
+  margin-top: 18px; /* ✅ consistent spacing */
+}
+
+/* ===============================
+   Feed list
+   =============================== */
+
+.list {
+  display: grid;
+  gap: 14px;
 }
 
 /* Small loading indicator row */
@@ -48,47 +83,27 @@
   margin: 8px 0 6px;
 }
 
-/* Feed list */
-.list {
-  display: grid;
-  gap: 14px;
-}
-
-/* Loading / empty */
+/* Loading / empty states */
 .loading {
   opacity: 0.65;
   padding: 18px 0;
   text-align: center;
 }
 
-/* Pagination */
-.pager {
+/* ===============================
+   Infinite scroll sentinel
+   =============================== */
+
+.sentinel {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-top: 22px;
+  padding: 24px 0;
 }
 
-.pagerBtn {
-  border: 1px solid var(--mui-palette-divider);
-  background: var(--mui-palette-background-paper);
-  color: inherit;
-  padding: 10px 16px;
-  border-radius: 12px;
-  cursor: pointer;
-  font-weight: 600;
-}
+/* ===============================
+   Responsive tweaks
+   =============================== */
 
-.pagerBtn:hover {
-  border-color: rgba(124, 77, 255, 0.35);
-}
-
-.pagerBtn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-}
-
-/* Responsive */
 @media (max-width: 600px) {
   .container {
     padding: 16px 14px 36px;
@@ -96,5 +111,17 @@
 
   .title {
     font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .headRow {
+    margin-bottom: 18px;
+  }
+
+  .section {
+    margin-top: 16px;
   }
 }

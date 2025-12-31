@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Container, Typography, Chip, CircularProgress, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  Chip,
+  CircularProgress,
+  Box,
+} from "@mui/material";
 import { useParams, useSearchParams } from "react-router-dom";
 import Header from "../../components/Header";
 import { useInfinitePosts } from "../../hooks/useInfinitePosts";
@@ -7,6 +13,8 @@ import PostCard from "./PostCard";
 import FiltersBar from "./FiltersBar";
 import AddPostCard from "./AddPostCard";
 import styles from "../../styles/FeedPage.module.css";
+import ArrowBackRoundedIcon from "@mui/icons-material/ArrowBackRounded";
+import { Link as RouterLink } from "react-router-dom";
 
 function toPositiveInt(value: string | null, fallback: number) {
   const n = Number(value);
@@ -93,15 +101,22 @@ export default function FeedPage() {
       <Container maxWidth="md" className={styles.container}>
         <div className={styles.headRow}>
           <div>
+            <RouterLink to="/" className={styles.backLink}>
+              <ArrowBackRoundedIcon fontSize="small" />
+              Communities
+            </RouterLink>
+
             <Typography className={styles.title}>
-              {resolvedGroupId ? resolvedGroupId.replaceAll("-", " ") : "All Posts"}
+              {resolvedGroupId
+                ? resolvedGroupId.replaceAll("-", " ")
+                : "All Posts"}
             </Typography>
             <Typography className={styles.subtitle}>
               Browse posts, filter by location, and search.
             </Typography>
           </div>
 
-          <Chip label={`Feed • ${total}`} variant="outlined" className={styles.badge} />
+          <Chip label={`Feed • ${total}`} variant="outlined" />
         </div>
 
         <div className={styles.section}>
@@ -132,10 +147,15 @@ export default function FeedPage() {
         </div>
 
         {/* Sentinel */}
-        <Box ref={loadMoreRef} sx={{ display: "flex", justifyContent: "center", py: 3 }}>
+        <Box
+          ref={loadMoreRef}
+          sx={{ display: "flex", justifyContent: "center", py: 3 }}
+        >
           {(isLoading || isFetchingNextPage) && <CircularProgress size={22} />}
           {!hasNextPage && posts.length > 0 && (
-            <Typography sx={{ opacity: 0.6 }}>You’ve reached the end</Typography>
+            <Typography sx={{ opacity: 0.6 }}>
+              You’ve reached the end
+            </Typography>
           )}
         </Box>
       </Container>
