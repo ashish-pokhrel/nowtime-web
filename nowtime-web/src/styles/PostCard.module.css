@@ -1,0 +1,116 @@
+/* Card container */
+.card {
+  border-radius: 14px;
+  border: 1px solid var(--mui-palette-divider);
+  background: var(--mui-palette-background-paper);
+  transition: box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.card:hover {
+  border-color: rgba(124, 77, 255, 0.25);
+  box-shadow: 0 10px 24px rgba(17, 24, 39, 0.10);
+}
+
+/* Content padding */
+.content {
+  padding: 16px;
+}
+
+/* Header row: avatar + name + meta */
+.metaRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+/* Avatar */
+.avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.10);
+  flex-shrink: 0;
+}
+
+.avatarImg {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  object-fit: cover;
+  border: 1px solid var(--mui-palette-divider);
+}
+
+/* Name + meta */
+.metaText {
+  min-width: 0;
+}
+
+.author {
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.meta {
+  font-size: 13px;
+  opacity: 0.7;
+  margin-top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Post title (if present later) */
+.postTitle {
+  font-weight: 900;
+  margin-top: 6px;
+  line-height: 1.3;
+}
+
+/* Post text */
+.postText {
+  margin-top: 8px;
+  line-height: 1.55;
+  opacity: 0.88;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Media (images/videos later) */
+.mediaWrap {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--mui-palette-divider);
+}
+
+.media {
+  width: 100%;
+  display: block;
+}
+
+/* Footer actions (future: likes, comments, share) */
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--mui-palette-divider);
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  opacity: 0.75;
+  cursor: pointer;
+}
+
+.actionBtn:hover {
+  opacity: 1;
+}

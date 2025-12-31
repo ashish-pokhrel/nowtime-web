@@ -1,0 +1,23 @@
+.card {
+  margin-top: 14px;
+  border-radius: 14px;
+  border: 1px solid var(--mui-palette-divider);
+  background: var(--mui-palette-background-paper);
+}
+
+.content {
+  padding: 14px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr;
+  gap: 12px;
+}
+
+/* Mobile */
+@media (max-width: 900px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}

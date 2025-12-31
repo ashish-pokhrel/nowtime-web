@@ -1,0 +1,55 @@
+.card {
+  border-radius: 14px;
+  border: 1px solid var(--mui-palette-divider);
+  background: var(--mui-palette-background-paper);
+}
+
+.content {
+  padding: 14px;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.avatar {
+  width: 38px !important;
+  height: 38px !important;
+  font-weight: 900;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.10) !important;
+  color: inherit !important;
+}
+
+.inputLike {
+  flex: 1;
+  text-align: left;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.06);
+  border-radius: 14px;
+  padding: 12px 14px;
+  cursor: pointer;
+  color: inherit;
+}
+
+.inputLike:hover {
+  border-color: rgba(124, 77, 255, 0.25);
+}
+
+.inputTitle {
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.inputSub {
+  opacity: 0.7;
+  margin-top: 2px;
+  font-size: 13px;
+}
+
+.actions {
+  display: flex;
+  gap: 6px;
+}

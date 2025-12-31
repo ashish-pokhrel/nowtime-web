@@ -1,0 +1,116 @@
+/* ===== Single image (compact) ===== */
+.singleWrap {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.06);
+
+  /* ✅ prevents it from taking the whole screen */
+  max-height: 420px;
+}
+
+.singleImg {
+  width: 100%;
+  height: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* ===== Slider for 2+ images ===== */
+.sliderWrap {
+  margin-top: 12px;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--mui-palette-divider);
+  position: relative;
+  background: rgba(127, 127, 127, 0.06);
+}
+
+/* ✅ top-right badge */
+.moreBadge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 900;
+  font-size: 12px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+}
+
+/* Scroll-snap slider: no extra libraries */
+.scroller {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+.scroller::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.slide {
+  flex: 0 0 100%;
+  scroll-snap-align: start;
+
+  /* ✅ consistent height, not too tall */
+  height: 380px;
+}
+
+@media (max-width: 600px) {
+  .slide {
+    height: 280px;
+  }
+  .singleWrap,
+  .singleImg {
+    max-height: 320px;
+  }
+}
+
+.slideImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Navigation row (arrows + dots) */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  border-top: 1px solid var(--mui-palette-divider);
+  background: var(--mui-palette-background-paper);
+}
+
+.navBtn {
+  border: 1px solid var(--mui-palette-divider);
+  border-radius: 12px;
+}
+
+/* Dots */
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(127, 127, 127, 0.35);
+}
+
+.dotActive {
+  width: 16px;
+  background: rgba(124, 77, 255, 0.7);
+}

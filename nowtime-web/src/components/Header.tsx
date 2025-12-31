@@ -14,7 +14,7 @@ export default function Header() {
       <Toolbar className={styles.toolbar}>
         <div className={styles.brand}>
           <img src={logo} alt="Mangopuff" className={styles.logo} />
-          <Typography className={styles.brandText}>mangopuff</Typography>
+          <Typography className={styles.brandText}>angopuff</Typography>
         </div>
 
         <div className={styles.spacer} />
