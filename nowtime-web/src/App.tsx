@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import CommunitiesPage from "./pages/CommunitiesPage";
-import FeedPage from "../src/components/feed/FeedPage";
+import FeedPage from "../src/pages/feed/FeedPage";
 
 export default function App() {
   return (

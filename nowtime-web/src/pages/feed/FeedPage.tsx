@@ -1,11 +1,11 @@
 import * as React from "react";
 import { Container, Typography, Chip, CircularProgress, Box } from "@mui/material";
 import { useParams, useSearchParams } from "react-router-dom";
-import Header from "../Header";
-import { usePosts } from "../../hooks/usePosts";
-import PostCard from "../../components/feed/PostCard";
-import FiltersBar from "../../components/feed/FiltersBar";
-import AddPostCard from "../../components/feed/AddPostCard";
+import Header from "../../components/Header";
+import { useInfinitePosts } from "../../hooks/useInfinitePosts";
+import PostCard from "./PostCard";
+import FiltersBar from "./FiltersBar";
+import AddPostCard from "./AddPostCard";
 import styles from "../../styles/FeedPage.module.css";
 
 function toPositiveInt(value: string | null, fallback: number) {
@@ -20,40 +20,71 @@ export default function FeedPage() {
 
   const resolvedGroupId = groupId && groupId !== "all" ? groupId : undefined;
 
-  const skip = toPositiveInt(searchParams.get("skip"), 1);
   const top = toPositiveInt(searchParams.get("top"), 5);
-
   const searchTerm = searchParams.get("searchTerm") ?? "";
   const postLocation = searchParams.get("postLocation") ?? "";
   const region = searchParams.get("region") ?? "";
 
-  const { data, isLoading, isFetching, isError } = usePosts({
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    isError,
+  } = useInfinitePosts({
     groupId: resolvedGroupId,
-    skip,
     top,
     searchTerm: searchTerm || undefined,
     postLocation: postLocation || undefined,
     region: region || undefined,
   });
 
+  // ✅ Flatten pages safely
+  const posts = data?.pages?.flatMap((page) => page.posts) ?? [];
+  const total = data?.pages?.[0]?.count ?? 0;
+
+  // ✅ Safe param update (does NOT wipe other params)
   const setParam = React.useCallback(
     (key: string, value: string) => {
       const next = new URLSearchParams(searchParams);
-
       const trimmed = value.trim();
+
       if (!trimmed) next.delete(key);
       else next.set(key, trimmed);
 
-      // Reset pagination when filters change
-      if (key !== "skip") next.set("skip", "1");
+      // Keep top stable in URL if you want
+      if (!next.get("top")) next.set("top", String(top));
 
       setSearchParams(next, { replace: true });
     },
-    [searchParams, setSearchParams]
+    [searchParams, setSearchParams, top]
   );
 
-  const posts = data?.posts ?? [];
-  const total = data?.count ?? 0;
+  /* ------------------ Infinite scroll observer ------------------ */
+  const loadMoreRef = React.useRef<HTMLDivElement | null>(null);
+
+  React.useEffect(() => {
+    const el = loadMoreRef.current;
+    if (!el) return;
+
+    // stop if no more pages
+    if (!hasNextPage) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        // ✅ prevent repeated calls while already fetching
+        if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+          fetchNextPage();
+        }
+      },
+      { rootMargin: "200px" }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
+  /* -------------------------------------------------------------- */
 
   return (
     <div className={styles.page}>
@@ -70,11 +101,7 @@ export default function FeedPage() {
             </Typography>
           </div>
 
-          <Chip
-            label={`Feed • ${total}`}
-            variant="outlined"
-            className={styles.badge}
-          />
+          <Chip label={`Feed • ${total}`} variant="outlined" className={styles.badge} />
         </div>
 
         <div className={styles.section}>
@@ -92,44 +119,25 @@ export default function FeedPage() {
           />
         </div>
 
-        <Box className={styles.listHeader}>
-          {isFetching && <CircularProgress size={18} />}
-        </Box>
-
         {isError && (
           <Typography color="error" sx={{ mt: 2 }}>
             Failed to load posts.
           </Typography>
         )}
 
-        {isLoading ? (
-          <div className={styles.loading}>Loading…</div>
-        ) : posts.length === 0 ? (
-          <div className={styles.loading}>No posts found.</div>
-        ) : (
-          <div className={styles.list}>
-            {posts.map((p) => (
-              <PostCard key={p.id} post={p} />
-            ))}
-          </div>
-        )}
-
-        <div className={styles.pager}>
-          <button
-            className={styles.pagerBtn}
-            disabled={skip <= 1 || isFetching}
-            onClick={() => setParam("skip", String(Math.max(skip - 1, 1)))}
-          >
-            Prev
-          </button>
-          <button
-            className={styles.pagerBtn}
-            disabled={isFetching || posts.length === 0}
-            onClick={() => setParam("skip", String(skip + 1))}
-          >
-            Next
-          </button>
+        <div className={styles.list}>
+          {posts.map((p) => (
+            <PostCard key={p.id} post={p} />
+          ))}
         </div>
+
+        {/* Sentinel */}
+        <Box ref={loadMoreRef} sx={{ display: "flex", justifyContent: "center", py: 3 }}>
+          {(isLoading || isFetchingNextPage) && <CircularProgress size={22} />}
+          {!hasNextPage && posts.length > 0 && (
+            <Typography sx={{ opacity: 0.6 }}>You’ve reached the end</Typography>
+          )}
+        </Box>
       </Container>
     </div>
   );
