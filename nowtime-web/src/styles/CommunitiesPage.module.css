@@ -1,0 +1,95 @@
+.page {
+  min-height: 100vh;
+  /* Background is GLOBAL (MuiCssBaseline). Do not set it here. */
+}
+
+.container {
+  padding: 24px 16px;
+}
+
+.title {
+  font-size: 44px;
+  font-weight: 900;
+  letter-spacing: -0.6px;
+  margin: 0;
+}
+
+.subtitle {
+  opacity: 0.8;
+  margin: 6px 0 18px;
+}
+
+/* Card */
+.card {
+  height: 100%;
+  border-radius: 12px; /* less round */
+  border: 1px solid var(--mui-palette-divider);
+  background: var(--mui-palette-background-paper);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(17, 24, 39, 0.12);
+  border-color: rgba(124, 77, 255, 0.25);
+}
+
+.cardAccent {
+  height: 4px;
+}
+
+.cardContent {
+  padding: 16px;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.iconCircle {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px; /* more modern than perfect circle */
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.06); /* subtle in both modes */
+}
+
+.cardTitle {
+  font-weight: 800;
+  margin: 0;
+}
+
+.cardDescription {
+  opacity: 0.8;
+  margin: 10px 0;
+}
+
+.cardFooter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Loading skeleton block (CSS version) */
+.skeleton {
+  height: 180px;
+  border-radius: 12px;
+  border: 1px solid var(--mui-palette-divider);
+  background: rgba(127, 127, 127, 0.10);
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .container {
+    padding: 18px 14px;
+  }
+
+  .title {
+    font-size: 36px;
+  }
+}

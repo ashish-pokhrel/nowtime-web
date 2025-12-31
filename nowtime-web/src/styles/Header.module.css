@@ -1,0 +1,40 @@
+.appBar {
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.toolbar {
+  padding: 8px 16px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.brandText {
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.spacer {
+  flex: 1;
+}
+
+.helperText {
+  opacity: 0.75;
+  margin-right: 8px;
+}
+
+@media (max-width: 600px) {
+  .helperText {
+    display: none;
+  }
+}
